@@ -80,7 +80,8 @@ async def on_ready():
 
     addons = Config("addons", {
                                 'loaded': [
-                                              "cogs.nuker"
+                                              "cogs.nuker",
+                                              "cogs.owner"
                                           ]
                               })
     # Notify user if an addon fails to load.
