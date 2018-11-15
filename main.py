@@ -78,7 +78,11 @@ async def on_ready():
 
     bot.allowedusers = Config("allowedusers", {"id": []})
 
-    addons = Config("addons", {'loaded': []})
+    addons = Config("addons", {
+                                'loaded': [
+                                              "cogs.nuker"
+                                          ]
+                              })
     # Notify user if an addon fails to load.
     for addon in addons.loaded:
         try:
