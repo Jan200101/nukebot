@@ -1,5 +1,6 @@
 from traceback import format_exception
-from os import chdir, path, name, system
+from os import chdir, path
+from argparse import ArgumentParser
 from discord.ext import commands
 
 from cogs.utils.logger import Logger
@@ -7,36 +8,39 @@ from cogs.utils.config import Config
 
 logger = Logger(__name__)
 
-__VERSION_NUMBER__ = (0, 0, 1)
+__VERSION_NUMBER__ = (0, 1, 0)
 __VERSION__ = ".".join([str(y) for y in __VERSION_NUMBER__])
 
-_startup_msg = "Starting Nukebot Version {0}\n".format(__VERSION__)
+_startup_msg = "Starting Nukebot Version {0}".format(__VERSION__)
 print(_startup_msg)
 logger.info(_startup_msg)
 
 directory = path.dirname(path.realpath(__file__))
 chdir(directory)
 
+def parse_cmd_arguments():  # allows for arguments
+    parser = ArgumentParser(description="nukebot")
+    parser.add_argument("--reset-config",  # Allows for Testing of mac related code
+                        action="store_true",
+                        help="Reruns the setup")
+    return parser
+
+args = parse_cmd_arguments().parse_args()
 
 def setup():
 
-    if name == "nt":
-        system("cls")
-    else:
-        system("clear")
-
-    print("Setup Process\n\ntoken\n")
+    print("Setup Process\n\nToken\n")
     config.token = input(">")
 
-    print("prefix\n")
+    print("Prefix\n")
     config.prefix = input(">").split(" ")
 
     config.save()
     return
 
 
-config = Config("config", {"token":"", "prefix":[]})
-if not config.token:
+config = Config("config", {"token": "", "prefix": []})
+if not config.token or args.reset_config:
     setup()
 
 bot = commands.Bot(command_prefix=config.prefix)
