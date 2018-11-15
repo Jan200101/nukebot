@@ -6,6 +6,7 @@ from discord.errors import Forbidden
 from cogs.utils.formatting import escape
 from discord.channel import TextChannel
 
+
 class Logger:
 
     def __init__(self, name, channel=None, *, dateform="%d/%m/%Y %H:%M"):
@@ -42,7 +43,8 @@ class Logger:
     def warn(self, content):
         type = "WARNING"
         function = _getframe(1).f_code.co_name
-        print("[{function}] {content}".format(function=function, content=content))
+        print("[{function}] {content}".format(
+            function=function, content=content))
         self.write(content, type, function)
         if self.channel:
             ensure_future(self.send(content, type, function, Color.red()))

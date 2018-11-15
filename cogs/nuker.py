@@ -73,7 +73,7 @@ class Nuker:
                     self.guilds.remove(i)
                     print(
                         "[Auditspam]({}) Can't change nickname, stopping".format(i.id))
-            await sleep(1)
+            await sleep(2)
 
 
 def setup(bot):
